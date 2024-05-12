@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My super nifty to-do list</title>
+<style>
+    li {
+        padding: 5px;
+    }
+    .white-bg {
+        background-color: white;
+    }
+    .yellow-bg {
+        background-color: yellow;
+    }
+</style>
+</head>
+<body>
+
+<h1>My super nifty to-do list</h1>
+<ul id="list"></ul>
+<div>
+    <input type="text" id="item" />
+    <button id="add">add</button>
+    <button id="remove">remove</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const list = document.getElementById('list');
+    const addItemButton = document.getElementById('add');
+    const removeItemButton = document.getElementById('remove');
+    const inputItem = document.getElementById('item');
+    
+    let isYellow = false; 
+    
+    
+    function addItemToList(item) {
+        const words = item.split(' ');
+        words.forEach(word => {
+            const li = document.createElement('li');
+            li.textContent = word;
+            li.classList.add(isYellow ? 'yellow-bg' : 'white-bg');
+            isYellow = !isYellow; 
+            list.appendChild(li);
+        });
+    }
+    
+   
+    function removeItemFromList(itemToRemove) {
+        const lis = list.getElementsByTagName('li');
+        for (let i = 0; i < lis.length; i++) {
+            const li = lis[i];
+            if (li.textContent.toLowerCase() === itemToRemove.toLowerCase()) {
+                list.removeChild(li);
+                return; 
+            }
+        }
+    }
+    
+   
+    addItemButton.addEventListener('click', function() {
+        const item = inputItem.value.trim();
+        if (item !== '') {
+            addItemToList(item);
+            inputItem.value = ''; 
+        }
+    });
+    
+    
+    removeItemButton.addEventListener('click', function() {
+        const itemToRemove = inputItem.value.trim();
+        if (itemToRemove !== '') {
+            removeItemFromList(itemToRemove);
+            inputItem.value = ''; 
+        }
+    });
+});
+</script>
+
+</body>
+</html>

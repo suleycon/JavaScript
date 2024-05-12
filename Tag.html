@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Tag Validation</title>
+</head>
+<body>
+
+<h2>HTML Tag Validation</h2>
+
+<p>Enter HTML tags to validate:</p>
+
+<textarea id="tagInput" rows="5" cols="50" placeholder="Enter HTML tags, one per line..."></textarea><br>
+<button onclick="validateTags()">Validate</button>
+
+<p id="results"></p>
+
+<script>
+function validateTags() {
+
+    const tagRegex = /^<(\w+)(?:\s+\w+="[^"]*")*\s*\/>$/;
+
+    const tagsText = document.getElementById("tagInput").value;
+
+    const tags = tagsText.split('\n');
+
+    const validTags = [];
+    const invalidTags = [];
+
+    tags.forEach(tag => {
+        if (tagRegex.test(tag)) {
+            validTags.push(tag);
+        } else {
+            invalidTags.push(tag);
+        }
+    });
+
+   
+    const resultsElement = document.getElementById("results");
+    resultsElement.innerHTML = `<p>Valid Tags:</p><ul>${validTags.map(tag => `<li>${tag}</li>`).join('')}</ul>`;
+    resultsElement.innerHTML += `<p>Invalid Tags:</p><ul>${invalidTags.map(tag => `<li>${tag}</li>`).join('')}</ul>`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Validation</title>
+</head>
+<body>
+
+<h2>Price Validation</h2>
+
+<p>Enter prices to validate:</p>
+
+<textarea id="priceInput" rows="5" cols="50" placeholder="Enter prices, one per line..."></textarea><br>
+<button onclick="validatePrices()">Validate</button>
+
+<p id="results"></p>
+
+<script>
+function validatePrices() {
+    
+    const priceRegex = /^\$\d+(?:\.\d{2})?$/;
+
+   
+    const pricesText = document.getElementById("priceInput").value;
+
+    
+    const prices = pricesText.split('\n');
+
+    
+    const validPrices = [];
+    const invalidPrices = [];
+
+    
+    prices.forEach(price => {
+        if (priceRegex.test(price)) {
+            validPrices.push(price);
+        } else {
+            invalidPrices.push(price);
+        }
+    });
+
+    
+    const resultsElement = document.getElementById("results");
+    resultsElement.innerHTML = `<p>Valid Prices:</p><ul>${validPrices.map(price => `<li>${price}</li>`).join('')}</ul>`;
+    resultsElement.innerHTML += `<p>Invalid Prices:</p><ul>${invalidPrices.map(price => `<li>${price}</li>`).join('')}</ul>`;
+}
+</script>
+
+</body>
+</html>
